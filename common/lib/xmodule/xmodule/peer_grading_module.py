@@ -74,12 +74,11 @@ class PeerGradingModule(PeerGradingFields, XModule):
 
     css = {'scss': [resource_string(__name__, 'css/combinedopenended/display.scss')]}
 
-    def __init__(self, system, location, descriptor, model_data):
-        XModule.__init__(self, system, location, descriptor, model_data)
+    def __init__(self, *args, **kwargs):
+        super(PeerGradingModule, self).__init__(*args, **kwargs)
 
-        # We need to set the location here so the child modules can use it
-        system.set('location', location)
-        self.system = system
+        #We need to set the location here so the child modules can use it
+        self.runtime.set('location', self.location)
         if (self.system.open_ended_grading_interface):
             self.peer_gs = PeerGradingService(self.system.open_ended_grading_interface, self.system)
         else:
